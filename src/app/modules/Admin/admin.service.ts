@@ -47,7 +47,8 @@ const getAllAdminFromDB = async (query: any, options: any) => {
   const whereConditions: Prisma.AdminWhereInput = { AND: andConditions };
   const result = await prisma.admin.findMany({
     where: whereConditions,
-    skip: (page - 1) * limit,
+    skip: (Number(page) - 1) * Number(limit),
+    take: Number(limit),
   });
   return result;
 };
