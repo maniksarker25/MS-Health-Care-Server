@@ -3,6 +3,9 @@ import cors from "cors";
 import { userRoutes } from "./app/modules/User/user.routes";
 import { adminRoutes } from "./app/modules/Admin/admin.routes";
 import router from "./app/routes";
+import { NextFunction } from "express";
+import httpStatus from "http-status";
+import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 const app: Application = express();
 app.use(cors());
 // parser ----------------------------------------------------------------
@@ -14,5 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/api/v1", router);
+
+app.use(globalErrorHandler);
 
 export default app;
