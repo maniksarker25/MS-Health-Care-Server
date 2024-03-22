@@ -1,7 +1,7 @@
 export const calculatePagination = (options: {
-  page?: string;
-  limit?: string;
-  sortBy: string;
+  page?: number;
+  limit?: number;
+  sortBy?: string;
   sortOrder?: string;
 }) => {
   const page = Number(options.page) || 1;
