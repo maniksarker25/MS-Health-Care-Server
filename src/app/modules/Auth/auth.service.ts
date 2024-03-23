@@ -4,6 +4,7 @@ import prisma from "../../utils/prisma";
 import { TLoginUser } from "./auth.interface";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import config from "../../config";
 const loginUserIntoDB = async (payload: TLoginUser) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -25,8 +26,16 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
     email: user?.email,
     role: user?.role,
   };
-  const accessToken = generateToken(jwtPayload, "abcdefg", "15m");
-  const refreshToken = generateToken(jwtPayload, "efghij", "30d");
+  const accessToken = generateToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
+  const refreshToken = generateToken(
+    jwtPayload,
+    config.jwt_refresh_secret as string,
+    config.jwt_refresh_expires_in as string
+  );
 
   return {
     accessToken,
