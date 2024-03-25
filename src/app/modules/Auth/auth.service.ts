@@ -5,6 +5,8 @@ import { TLoginUser } from "./auth.interface";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 const loginUserIntoDB = async (payload: TLoginUser) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -66,7 +68,20 @@ const refreshToken = async (token: string) => {
   return { accessToken };
 };
 
+// change password
+const changePasswordIntoDB = async (user, payload: any) => {
+  const userData = await prisma.user.findUnique({
+    where: {
+      email: user?.email,
+    },
+  });
+  if (!userData) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found");
+  }
+};
+
 export const authService = {
   loginUserIntoDB,
   refreshToken,
+  changePasswordIntoDB,
 };

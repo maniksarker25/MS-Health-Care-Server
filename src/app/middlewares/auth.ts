@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../utils/catchAsync";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import verifyToken from "../helpers/verifyToken";
 import config from "../config";
 import AppError from "../errors/appError";
@@ -30,6 +30,7 @@ const auth = (...requiredRoles: string[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(httpStatus.UNAUTHORIZED, "You are un authorized");
     }
+    req.user = decoded as JwtPayload;
     next();
   });
 };
