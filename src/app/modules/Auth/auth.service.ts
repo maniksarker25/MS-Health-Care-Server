@@ -73,11 +73,32 @@ const changePasswordIntoDB = async (user, payload: any) => {
   const userData = await prisma.user.findUnique({
     where: {
       email: user?.email,
+      status: UserStatus.ACTIVE,
     },
   });
   if (!userData) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found");
   }
+  const isPasswordMatched = await bcrypt.compare(
+    payload?.currentPassword,
+    userData?.password
+  );
+
+  if (!isPasswordMatched) {
+    throw new AppError(httpStatus.FORBIDDEN, "Password does not matched");
+  }
+  const hashedPassword = await bcrypt.hash(payload?.newPassword, 12);
+  await prisma.user.update({
+    where: {
+      email: user?.email,
+    },
+    data: {
+      password: hashedPassword,
+      needPasswordChange: false,
+    },
+  });
+
+  return null;
 };
 
 export const authService = {
