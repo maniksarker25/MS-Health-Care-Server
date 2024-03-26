@@ -3,8 +3,16 @@ import { userService } from "./user.service";
 import httpStatus from "http-status";
 
 const createAdmin = async (req: Request, res: Response) => {
+  // console.log("file", req.file);
+  // console.log("body", req.body.data);
+  const { password, admin: adminData } = req.body.data;
+  console.log("from controller", password, adminData);
   try {
-    const result = await userService.createAdminIntoDB(req.body);
+    const result = await userService.createAdminIntoDB(
+      req.file,
+      password,
+      adminData
+    );
     res.status(httpStatus.CREATED).json({
       success: true,
       message: "Admin created successfully",
