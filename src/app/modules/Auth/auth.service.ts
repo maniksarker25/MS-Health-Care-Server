@@ -126,7 +126,7 @@ const forgetPasswordIntoDB = async (email: string) => {
     config.jwt_reset_pass_token_expires_in as string
   );
   const resetUiLink = `${config.reset_password_ui_link}?email=${userData.email}&token=${resetToken}`;
-  console.log(resetUiLink);
+  // console.log(resetUiLink);
   await sendEmail(
     userData?.email,
     `
