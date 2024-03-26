@@ -14,7 +14,8 @@ const createAdminIntoDB = async (
       imageName,
       file?.path
     );
-    console.log(uploadImage);
+    adminData.profilePhoto = uploadImage?.secure_url as string;
+    console.log(adminData);
   }
   const hashedPassword = await bcrypt.hash(password, 12);
   // make user data ----------------------------------------------------------------

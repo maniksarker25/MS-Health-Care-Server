@@ -1,12 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import httpStatus from "http-status";
 
-const createAdmin = async (req: Request, res: Response) => {
-  // console.log("file", req.file);
-  // console.log("body", req.body.data);
-  const { password, admin: adminData } = req.body.data;
-  console.log("from controller", password, adminData);
+const createAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  const { password, admin: adminData } = req.body;
   try {
     const result = await userService.createAdminIntoDB(
       req.file,
