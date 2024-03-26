@@ -24,6 +24,7 @@ model User {
   updatedAt DateTime @updatedAt
   admin Admin?
   doctor Doctor?
+  patient Patient?
 
   @@map("users")
 }
@@ -66,6 +67,22 @@ model Doctor {
 
   @@map("doctors")
 
+}
+// shcema for patient
+model Patient {
+  id            String   @id @unique @default(uuid())
+  email         String   @unique
+  name          String
+  profilePhoto  String?
+  contactNumber String?
+  address       String?
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(references: [email], fields: [email])
+
+  @@map("patients")
 }
 
 

@@ -43,7 +43,7 @@ const createDoctorIntoDB = async (
   password: string,
   doctorData: any
 ) => {
-  console.log("doctor", password, doctorData);
+  // console.log("doctor", password, doctorData);
   if (file) {
     const imageName = file.originalname;
     const uploadImage = await fileUploader.uploadImageToCloudinary(
@@ -71,7 +71,43 @@ const createDoctorIntoDB = async (
   });
   return result;
 };
+
+// create patient
+const createPatientIntoDB = async (
+  file: any,
+  password: string,
+  patientData: any
+) => {
+  console.log("Patient", password, patientData);
+  if (file) {
+    const imageName = file.originalname;
+    const uploadImage = await fileUploader.uploadImageToCloudinary(
+      imageName,
+      file?.path
+    );
+    patientData.profilePhoto = uploadImage?.secure_url as string;
+  }
+  const hashedPassword = await bcrypt.hash(password, 12);
+  // make user data ----------------------------------------------------------------
+  const userData = {
+    email: patientData?.email,
+    password: hashedPassword,
+    role: UserRole.DOCTOR,
+  };
+
+  const result = await prisma.$transaction(async (transactionClient) => {
+    await transactionClient.user.create({
+      data: userData,
+    });
+    const createdPatientData = await transactionClient.patient.create({
+      data: patientData,
+    });
+    return createdPatientData;
+  });
+  return result;
+};
 export const userService = {
   createAdminIntoDB,
   createDoctorIntoDB,
+  createPatientIntoDB,
 };
