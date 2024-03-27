@@ -3,6 +3,7 @@ import { userController } from "./user.controller";
 import auth from "../../middlewares/auth";
 import { fileUploader } from "../../helpers/fileUploader";
 import { userValidation } from "./user.validation";
+import { UserRole } from "@prisma/client";
 
 const router = express.Router();
 
@@ -41,6 +42,17 @@ router.post(
 );
 
 // get all user
-router.get("/", userController.getAllUser);
+router.get(
+  "/",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  userController.getAllUser
+);
+
+// update status
+router.patch(
+  "/update-status/:id",
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  userController.changeProfileStatus
+);
 
 export const userRoutes = router;
