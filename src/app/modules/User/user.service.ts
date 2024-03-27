@@ -1,11 +1,21 @@
-import { PrismaClient, UserRole } from "@prisma/client";
+import {
+  Admin,
+  Doctor,
+  Patient,
+  Prisma,
+  PrismaClient,
+  UserRole,
+} from "@prisma/client";
 import bcrypt, { compareSync } from "bcrypt";
 import { fileUploader } from "../../helpers/fileUploader";
+import { TPaginationOptions } from "../../interface/pagination";
+import { calculatePagination } from "../../helpers/paginationHelper";
+import { userSearchableFields } from "./user.constant";
 const prisma = new PrismaClient();
 const createAdminIntoDB = async (
   file: any,
   password: string,
-  adminData: any
+  adminData: Admin
 ) => {
   // console.log(file, password, adminData);
   if (file) {
@@ -41,7 +51,7 @@ const createAdminIntoDB = async (
 const createDoctorIntoDB = async (
   file: any,
   password: string,
-  doctorData: any
+  doctorData: Doctor
 ) => {
   // console.log("doctor", password, doctorData);
   if (file) {
@@ -76,7 +86,7 @@ const createDoctorIntoDB = async (
 const createPatientIntoDB = async (
   file: any,
   password: string,
-  patientData: any
+  patientData: Patient
 ) => {
   console.log("Patient", password, patientData);
   if (file) {
@@ -92,7 +102,7 @@ const createPatientIntoDB = async (
   const userData = {
     email: patientData?.email,
     password: hashedPassword,
-    role: UserRole.DOCTOR,
+    role: UserRole.PATIENT,
   };
 
   const result = await prisma.$transaction(async (transactionClient) => {
@@ -106,8 +116,101 @@ const createPatientIntoDB = async (
   });
   return result;
 };
+
+// get all user from db
+const getAllUserFromDB = async (query: any, options: TPaginationOptions) => {
+  const { searchTerm, ...filterData } = query;
+  // const { limit, page } = options;
+  const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
+  // console.log(filterData);
+
+  const andConditions: Prisma.UserWhereInput[] = [];
+  // [
+  //   {
+  //     name: {
+  //       contains: query?.searchTerm,
+  //       mode: "insensitive",
+  //     },
+  //   },
+  //   {
+  //     email: {
+  //       contains: query?.searchTerm,
+  //       mode: "insensitive",
+  //     },
+  //   },
+  // ],
+  if (query?.searchTerm) {
+    andConditions.push({
+      OR: userSearchableFields.map((field) => ({
+        [field]: {
+          contains: query?.searchTerm,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  // console.dir(andConditions, { depth: "infinity" });
+
+  // make queries for filter data
+  if (Object.keys(filterData)?.length > 0) {
+    andConditions.push({
+      AND: Object.keys(filterData)?.map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+  const whereConditions: Prisma.UserWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+  const result = await prisma.user.findMany({
+    where: whereConditions,
+    skip,
+    take: limit,
+    orderBy:
+      options.sortBy && options?.sortOrder
+        ? {
+            [options?.sortBy]: options?.sortOrder,
+          }
+        : {
+            createdAt: "desc",
+          },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      needPasswordChange: true,
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+      admin: true,
+      patient: true,
+      doctor: true,
+    },
+
+    // we can use include for show admin,doctor,patient profile information
+    // include: {
+    //   admin: true,
+    //   patient: true,
+    //   doctor: true,
+    // },
+  });
+  const total = await prisma.user.count({
+    where: whereConditions,
+  });
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
 export const userService = {
   createAdminIntoDB,
   createDoctorIntoDB,
   createPatientIntoDB,
+  getAllUserFromDB,
 };

@@ -40,4 +40,7 @@ router.post(
   }
 );
 
+// get all user
+router.get("/", userController.getAllUser);
+
 export const userRoutes = router;

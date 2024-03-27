@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
+import pick from "../../utils/pick";
+import sendResponse from "../../utils/sendResponse";
+import { userFilterableFields } from "./user.constant";
 
 const createAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const { password, admin: adminData } = req.body;
@@ -60,8 +63,25 @@ const createPatient = catchAsync(
     });
   }
 );
+
+// get all user from db
+const getAllUser = catchAsync(async (req, res) => {
+  const filters = pick(req?.query, userFilterableFields);
+  const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+  // console.log("options", options);
+  const result = await userService.getAllUserFromDB(filters, options);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User retrieved successfully",
+    meta: result?.meta,
+    data: result?.data,
+  });
+});
 export const userController = {
   createAdmin,
   createDoctor,
   createPatient,
+  getAllUser,
 };
