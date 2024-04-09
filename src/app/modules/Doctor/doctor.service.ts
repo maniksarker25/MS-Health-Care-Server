@@ -118,7 +118,7 @@ const updateDoctorIntoDB = async (id: string, payload: any) => {
     if (specialties && specialties.length > 0) {
       // delete specialties
       const deleteSpecialties = specialties.filter(
-        (specialty) => specialty.isDeleted
+        (specialty: any) => specialty.isDeleted
       );
       console.log("delete", deleteSpecialties);
       for (const specialty of deleteSpecialties) {
@@ -131,7 +131,7 @@ const updateDoctorIntoDB = async (id: string, payload: any) => {
       }
       // create specialties
       const createSpecialties = specialties.filter(
-        (specialty) => !specialty.isDeleted
+        (specialty: any) => !specialty.isDeleted
       );
       console.log("create", createSpecialties);
       for (const specialty of createSpecialties) {
