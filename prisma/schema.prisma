@@ -14,60 +14,60 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  email String @unique
-  password String 
-  role UserRole
-  needPasswordChange Boolean @default(true)
-  status UserStatus @default(ACTIVE)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  admin Admin?
-  doctor Doctor?
-  patient Patient?
+  id                 String     @id @default(uuid())
+  email              String     @unique
+  password           String
+  role               UserRole
+  needPasswordChange Boolean    @default(true)
+  status             UserStatus @default(ACTIVE)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  admin              Admin?
+  doctor             Doctor?
+  patient            Patient?
 
   @@map("users")
 }
 
 model Admin {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  profilePhoto String?
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  profilePhoto  String?
   contactNumber String
-  isDeleted Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user User @relation(fields: [email],references: [email])
+  isDeleted     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [email], references: [email])
 
   @@map("admins")
 }
 
-
 // schema for doctor 
 model Doctor {
-  id String @id @default(uuid())
-  name String
-  email String @unique
-  profilePhoto String?
-  contactNumber String
-  address String?
-  registrationNumber String
-  experience Int @default(0)
-  gender Gender
-  appointmentFee Int
-  qualification String
+  id                  String              @id @default(uuid())
+  name                String
+  email               String              @unique
+  profilePhoto        String?
+  contactNumber       String
+  address             String?
+  registrationNumber  String
+  experience          Int                 @default(0)
+  gender              Gender
+  appointmentFee      Int
+  qualification       String
   currentWorkingPlace String
-  designation String
+  designation         String
   // averageRating Int
-  isDeleted Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user User @relation(fields: [email],references: [email])
+  isDeleted           Boolean             @default(false)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  user                User                @relation(fields: [email], references: [email])
+  doctorSpecialties   DoctorSpecialties[]
 
   @@map("doctors")
-
 }
+
 // shcema for patient
 model Patient {
   id            String   @id @unique @default(uuid())
@@ -85,7 +85,24 @@ model Patient {
   @@map("patients")
 }
 
+model Specialties {
+  id                String              @id @unique @default(uuid())
+  title             String
+  icon              String
+  doctorSpecialties DoctorSpecialties[]
 
+  @@map("spacialties")
+}
+
+model DoctorSpecialties {
+  specialtiesId String
+  specialties   Specialties @relation(fields: [specialtiesId], references: [id])
+  doctorId      String
+  doctor        Doctor      @relation(fields: [doctorId], references: [id])
+
+  @@id([specialtiesId, doctorId])
+  @@map("doctorSpecialties")
+}
 
 // enums --------------------------------
 enum UserRole {
@@ -105,12 +122,3 @@ enum Gender {
   MALE
   FEMALE
 }
-
-
-
-
-
-
-
-
-
