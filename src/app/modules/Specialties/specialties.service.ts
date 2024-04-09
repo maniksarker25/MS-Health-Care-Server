@@ -21,6 +21,20 @@ const createSpecialtiesIntoDB = async (file: IFile, payload: Specialties) => {
   return result;
 };
 
+const getAllSpecialtiesFromDB = async (): Promise<Specialties[]> => {
+  return await prisma.specialties.findMany();
+};
+const deleteSpecialtiesFromDB = async (id: string): Promise<Specialties> => {
+  const result = await prisma.specialties.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const specialtiesService = {
   createSpecialtiesIntoDB,
+  getAllSpecialtiesFromDB,
+  deleteSpecialtiesFromDB,
 };
