@@ -68,7 +68,7 @@ model Doctor {
   @@map("doctors")
 }
 
-// shcema for patient
+// shcema for patient-----------
 model Patient {
   id            String   @id @unique @default(uuid())
   email         String   @unique

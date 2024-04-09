@@ -93,6 +93,44 @@ const getSingleDoctorFromDB = async (id: string): Promise<Doctor | null> => {
   return result;
 };
 
+// update doctor into db
+const updateDoctorIntoDB = async (id: string, payload: any) => {
+  const { specialties, ...doctorData } = payload;
+  // console.log("specialties", specialties);
+  // console.log("doctorData", doctorData);
+  const doctorInfo = await prisma.doctor.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  const result = await prisma.$transaction(async (transactionClient) => {
+    const updatedDoctorData = await transactionClient.doctor.update({
+      where: {
+        id,
+      },
+      data: doctorData,
+      include: {
+        doctorSpecialties: true,
+      },
+    });
+
+    for (const specialtiesId of specialties) {
+      const createDoctorSpecialties =
+        await transactionClient.doctorSpecialties.create({
+          data: {
+            doctorId: doctorInfo?.id,
+            specialtiesId: specialtiesId,
+          },
+        });
+    }
+
+    return updatedDoctorData;
+  });
+
+  return result;
+};
+
 // delete doctor from db
 const deleteDoctorFromDB = async (id: string): Promise<Doctor | null> => {
   await prisma.doctor.findUniqueOrThrow({
@@ -150,6 +188,7 @@ const softDeleteDoctorFromDB = async (id: string) => {
 export const doctorService = {
   getAllDoctorFromDB,
   getSingleDoctorFromDB,
+  updateDoctorIntoDB,
   deleteDoctorFromDB,
   softDeleteDoctorFromDB,
 };

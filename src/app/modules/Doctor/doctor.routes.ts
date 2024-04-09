@@ -16,6 +16,8 @@ router.get(
   doctorController.getSingleDoctor
 );
 
+router.patch("/:id", doctorController.updateDoctor);
+
 router.delete(
   "/:id",
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),

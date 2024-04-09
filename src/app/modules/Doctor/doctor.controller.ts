@@ -33,6 +33,18 @@ const getSingleDoctor = catchAsync(async (req, res) => {
   });
 });
 
+// update doctor
+const updateDoctor = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const result = await doctorService.updateDoctorIntoDB(id, req.body);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Doctor updated successfully",
+    data: result,
+  });
+});
+
 // delete doctor
 const deleteDoctor = catchAsync(async (req, res) => {
   const { id } = req.params;
@@ -61,4 +73,5 @@ export const doctorController = {
   getSingleDoctor,
   deleteDoctor,
   softDeleteDoctor,
+  updateDoctor,
 };
