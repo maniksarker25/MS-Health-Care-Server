@@ -99,7 +99,10 @@ const getSinglePatientFromDB = async (id: string): Promise<Patient | null> => {
 };
 
 // update patient into db
-const updatePatientIntoDB = async (id: string, payload: any) => {
+const updatePatientIntoDB = async (
+  id: string,
+  payload: Partial<IPatientUpdate>
+): Promise<Patient | null> => {
   const {
     patientHealthData,
     medicalReport: medicalReportData,
