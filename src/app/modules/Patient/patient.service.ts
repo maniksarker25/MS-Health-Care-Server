@@ -133,7 +133,7 @@ const updatePatientIntoDB = async (
     // update or create patient health data
     // console.log(patientHealthData);
     if (patientHealthData) {
-      const healthData = await transactionClient.patientHealthData.upsert({
+      await transactionClient.patientHealthData.upsert({
         where: {
           patientId: patientInfo.id,
         },
@@ -144,7 +144,7 @@ const updatePatientIntoDB = async (
 
     // create for update medical report --------
     if (medicalReportData) {
-      const medicalReport = await transactionClient.medicalReport.create({
+      await transactionClient.medicalReport.create({
         data: { ...medicalReportData, patientId: patientInfo.id },
       });
     }
@@ -163,24 +163,49 @@ const updatePatientIntoDB = async (
 };
 
 // delete doctor from db
-const deletePatientFromDB = async (id: string): Promise<Patient | null> => {
-  await prisma.patient.findUniqueOrThrow({
-    where: {
-      id,
-    },
-  });
-  const result = await prisma.$transaction(async (transactionClient) => {
-    const patientDeletedData = await transactionClient.patient.delete({
+const deletePatientFromDB = async (id: string) => {
+  const result = await prisma.$transaction(async (tx) => {
+    const medicalReports = await prisma.medicalReport.findMany({
+      where: {
+        patientId: id,
+      },
+    });
+    // delete medical report
+    if (medicalReports && medicalReports?.length > 0) {
+      await tx.medicalReport.deleteMany({
+        where: {
+          patientId: id,
+        },
+      });
+    }
+
+    const patientHealthData = await prisma.patientHealthData.findUnique({
+      where: {
+        patientId: id,
+      },
+    });
+    // delete patient health data
+    if (patientHealthData) {
+      await tx.patientHealthData.delete({
+        where: {
+          patientId: id,
+        },
+      });
+    }
+
+    const deletedPatient = await tx.patient.delete({
       where: {
         id,
       },
     });
-    await transactionClient.user.delete({
+
+    await tx.user.delete({
       where: {
-        email: patientDeletedData?.email,
+        email: deletedPatient.email,
       },
     });
-    return patientDeletedData;
+
+    return deletedPatient;
   });
 
   return result;
