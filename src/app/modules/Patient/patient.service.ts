@@ -100,7 +100,11 @@ const getSinglePatientFromDB = async (id: string): Promise<Patient | null> => {
 
 // update patient into db
 const updatePatientIntoDB = async (id: string, payload: any) => {
-  const { patientHealthData, medicalReport, ...patientData } = payload;
+  const {
+    patientHealthData,
+    medicalReport: medicalReportData,
+    ...patientData
+  } = payload;
   // console.log(patientHealthData, medicalReport, patientData);
 
   const patientInfo = await prisma.patient.findUniqueOrThrow({
@@ -133,11 +137,26 @@ const updatePatientIntoDB = async (id: string, payload: any) => {
         update: patientHealthData,
         create: { ...patientHealthData, patientId: patientInfo.id },
       });
-      console.log(healthData);
+    }
+
+    // create for update medical report --------
+    if (medicalReportData) {
+      const medicalReport = await transactionClient.medicalReport.create({
+        data: { ...medicalReportData, patientId: patientInfo.id },
+      });
     }
   });
 
-  // return result;
+  const responseData = await prisma.patient.findUnique({
+    where: {
+      id: patientInfo.id,
+    },
+    include: {
+      patientHealthData: true,
+      medicalReport: true,
+    },
+  });
+  return responseData;
 };
 
 // delete doctor from db
