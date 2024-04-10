@@ -3,4 +3,5 @@ export type TDoctorFilterRequest = {
   email?: string;
   contactNumber?: string;
   searchTerm?: string;
+  specialties?: string;
 };

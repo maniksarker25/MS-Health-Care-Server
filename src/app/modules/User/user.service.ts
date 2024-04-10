@@ -93,7 +93,7 @@ const createPatientIntoDB = async (
   password: string,
   patientData: Patient
 ) => {
-  console.log("Patient", password, patientData);
+  // console.log("Patient", password, patientData);
   if (file) {
     const imageName = file.originalname;
     const uploadImage = await fileUploader.uploadImageToCloudinary(
@@ -216,7 +216,7 @@ const getAllUserFromDB = async (query: any, options: TPaginationOptions) => {
 
 // change profile status into db
 const changeProfileStatusIntoDB = async (id: string, status: UserRole) => {
-  console.log("nice", id, status);
+  // console.log("nice", id, status);
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id,
