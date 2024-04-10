@@ -27,5 +27,6 @@ router.delete(
   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   patientController.softDeletePatient
 );
+router.patch("/:id", patientController.updatePatientIntoDB);
 
 export const patientRoutes = router;

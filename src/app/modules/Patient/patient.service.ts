@@ -3,7 +3,7 @@ import { calculatePagination } from "../../helpers/paginationHelper";
 
 import prisma from "../../utils/prisma";
 import { TPaginationOptions } from "../../interface/pagination";
-import { TPatientFilterRequest } from "./patient.interface";
+import { IPatientUpdate, TPatientFilterRequest } from "./patient.interface";
 import { patientSearchableFields } from "./patient.constant";
 
 const getAllPatientFromDB = async (
@@ -70,6 +70,10 @@ const getAllPatientFromDB = async (
         : {
             createdAt: "desc",
           },
+    include: {
+      medicalReport: true,
+      patientHealthData: true,
+    },
   });
   const total = await prisma.patient.count({
     where: whereConditions,
@@ -93,6 +97,12 @@ const getSinglePatientFromDB = async (id: string): Promise<Patient | null> => {
   });
   return result;
 };
+
+// update patient into db
+const updatePatientIntoDB = async (
+  id: string,
+  payload: Partial<IPatientUpdate>
+) => {};
 
 // delete doctor from db
 const deletePatientFromDB = async (id: string): Promise<Patient | null> => {
@@ -151,6 +161,7 @@ const softDeletePatientFromDB = async (id: string) => {
 export const patientService = {
   getAllPatientFromDB,
   getSinglePatientFromDB,
+  updatePatientIntoDB,
   deletePatientFromDB,
   softDeletePatientFromDB,
 };
