@@ -9,11 +9,11 @@ const createSchedule = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Specialties created successfully",
+    message: "Schedule created successfully",
     data: result,
   });
 });
 
-export const specialtiesController = {
+export const scheduleController = {
   createSchedule,
 };
