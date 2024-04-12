@@ -4,6 +4,7 @@ import { Prisma, Schedule } from "@prisma/client";
 import { TSchedule } from "./schedule.interface";
 import { calculatePagination } from "../../helpers/paginationHelper";
 import { TPaginationOptions } from "../../interface/pagination";
+import { JwtPayload } from "jsonwebtoken";
 const createScheduleIntoDB = async (
   payload: TSchedule
 ): Promise<Schedule[]> => {
@@ -70,7 +71,8 @@ const createScheduleIntoDB = async (
 
 const getAllScheduleFromDB = async (
   query: any,
-  options: TPaginationOptions
+  options: TPaginationOptions,
+  user: JwtPayload
 ) => {
   const { startDate, endDate, ...filterData } = query;
 
@@ -107,9 +109,28 @@ const getAllScheduleFromDB = async (
     });
   }
   const whereConditions: Prisma.ScheduleWhereInput = { AND: andConditions };
-  console.dir(whereConditions, { depth: "infinity" });
+  // console.dir(whereConditions, { depth: "infinity" });
+
+  // find all schedules for this doctor for not show duplicate schedules
+  const doctorSchedules = await prisma.doctorSchedules.findMany({
+    where: {
+      doctor: {
+        email: user?.email,
+      },
+    },
+  });
+
+  // get all ids for schedule
+  const doctorScheduleIds = doctorSchedules.map(
+    (schedule) => schedule.scheduleId
+  );
+  // console.log(doctorScheduleIds);
+
   const result = await prisma.schedule.findMany({
-    where: whereConditions,
+    where: {
+      ...whereConditions,
+      id: { notIn: doctorScheduleIds },
+    },
     skip,
     take: limit,
     orderBy:
@@ -122,7 +143,10 @@ const getAllScheduleFromDB = async (
           },
   });
   const total = await prisma.schedule.count({
-    where: whereConditions,
+    where: {
+      ...whereConditions,
+      id: { notIn: doctorScheduleIds },
+    },
   });
   return {
     meta: {

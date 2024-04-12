@@ -17,7 +17,12 @@ const createSchedule = catchAsync(async (req, res) => {
 const getAllSchedule = catchAsync(async (req, res) => {
   const filters = pick(req.query, ["startDate", "endDate"]);
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
-  const result = await scheduleService.getAllScheduleFromDB(filters, options);
+  const user = req.user;
+  const result = await scheduleService.getAllScheduleFromDB(
+    filters,
+    options,
+    user
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
