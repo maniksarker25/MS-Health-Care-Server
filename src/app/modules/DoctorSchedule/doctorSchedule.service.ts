@@ -1,7 +1,8 @@
+import { JwtPayload } from "jsonwebtoken";
 import prisma from "../../utils/prisma";
 
 const createDoctorScheduleIntoDB = async (
-  user: any,
+  user: JwtPayload,
   payload: {
     scheduleIds: string[];
   }
