@@ -1,7 +1,7 @@
 import { addHours, addMinutes, format } from "date-fns";
 import prisma from "../../utils/prisma";
 import { Prisma, Schedule } from "@prisma/client";
-import { TSchedule } from "./schedule.interface";
+import { TSchedule, TScheduleFilterRequest } from "./schedule.interface";
 import { calculatePagination } from "../../helpers/paginationHelper";
 import { TPaginationOptions } from "../../interface/pagination";
 import { JwtPayload } from "jsonwebtoken";
@@ -70,7 +70,7 @@ const createScheduleIntoDB = async (
 };
 
 const getAllScheduleFromDB = async (
-  query: any,
+  query: TScheduleFilterRequest,
   options: TPaginationOptions,
   user: JwtPayload
 ) => {

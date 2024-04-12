@@ -4,3 +4,8 @@ export type TSchedule = {
   startTime: string;
   endTime: string;
 };
+
+export type TScheduleFilterRequest = {
+  startDate?: string;
+  endDate?: string;
+};
