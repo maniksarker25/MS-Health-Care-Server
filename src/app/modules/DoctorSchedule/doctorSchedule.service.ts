@@ -3,6 +3,8 @@ import prisma from "../../utils/prisma";
 import { TPaginationOptions } from "../../interface/pagination";
 import { calculatePagination } from "../../helpers/paginationHelper";
 import { Prisma } from "@prisma/client";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 
 const createDoctorScheduleIntoDB = async (
   user: JwtPayload,
@@ -113,7 +115,46 @@ const getMyScheduleFromDB = async (
   };
 };
 
+// delete schedule from db
+const deleteDoctorScheduleFromDB = async (
+  user: JwtPayload,
+  scheduleId: string
+) => {
+  const doctorData = await prisma.doctor.findUniqueOrThrow({
+    where: {
+      email: user?.email,
+    },
+  });
+
+  const isBookedSchedule = await prisma.doctorSchedules.findUnique({
+    where: {
+      doctorId_scheduleId: {
+        doctorId: doctorData.id,
+        scheduleId: scheduleId,
+      },
+      isBooked: true,
+    },
+  });
+  if (isBookedSchedule) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      "You can not deleted this schedule.Because this schedule is already booked"
+    );
+  }
+  const result = await prisma.doctorSchedules.delete({
+    where: {
+      doctorId_scheduleId: {
+        doctorId: doctorData.id,
+        scheduleId: scheduleId,
+      },
+    },
+  });
+
+  return result;
+};
+
 export const doctorScheduleService = {
   createDoctorScheduleIntoDB,
   getMyScheduleFromDB,
+  deleteDoctorScheduleFromDB,
 };
