@@ -193,8 +193,24 @@ model Appointment {
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
   doctorSchedules   DoctorSchedules?
+  payment           Payment?
 
   @@map("appointments")
+}
+
+// create modal for payment
+model Payment {
+  id                String        @id @default(uuid())
+  appointmentId     String        @unique
+  appoinment        Appointment   @relation(fields: [appointmentId], references: [id])
+  amount            Float
+  transactionId     String
+  status            PaymentStatus @default(UNPAID)
+  paymentGetwayData Json?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@map("payments")
 }
 
 // enums --------------------------------
