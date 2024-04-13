@@ -144,7 +144,12 @@ const getMyAllAppointmentFromDB = async (
         ? { schedule: true, doctor: true }
         : {
             schedule: true,
-            patient: true,
+            patient: {
+              include: {
+                medicalReport: true,
+                patientHealthData: true,
+              },
+            },
           },
   });
   const total = await prisma.appointment.count({
