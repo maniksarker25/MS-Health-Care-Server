@@ -30,9 +30,25 @@ const getMySchedule = catchAsync(async (req, res) => {
   );
 
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: "My Schedule retrieved successfully",
+    data: result,
+  });
+});
+const getAllDoctorSchedule = catchAsync(async (req, res) => {
+  const filters = pick(req.query, ["startDate", "endDate", "isBooked"]);
+  const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+
+  const result = await doctorScheduleService.getAllDoctorScheduleFromDB(
+    filters,
+    options
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Schedule retrieved successfully",
     data: result,
   });
 });
@@ -57,4 +73,5 @@ export const doctorScheduleController = {
   createDoctorSchedule,
   getMySchedule,
   deleteDoctorSchedule,
+  getAllDoctorSchedule,
 };

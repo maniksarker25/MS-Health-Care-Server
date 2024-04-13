@@ -10,6 +10,11 @@ router.get(
   auth(UserRole.DOCTOR),
   doctorScheduleController.getMySchedule
 );
+router.get(
+  "/",
+  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+  doctorScheduleController.getAllDoctorSchedule
+);
 router.post(
   "/",
   auth(UserRole.DOCTOR),
