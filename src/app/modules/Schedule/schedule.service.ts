@@ -158,7 +158,18 @@ const getAllScheduleFromDB = async (
   };
 };
 
+// get single schedule
+const getSingleScheduleFromDB = async (id: string) => {
+  const result = await prisma.schedule.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const scheduleService = {
   createScheduleIntoDB,
   getAllScheduleFromDB,
+  getSingleScheduleFromDB,
 };

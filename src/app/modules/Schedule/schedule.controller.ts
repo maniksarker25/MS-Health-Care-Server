@@ -32,7 +32,20 @@ const getAllSchedule = catchAsync(async (req, res) => {
   });
 });
 
+// get single schedule
+const getSingleSchedule = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await scheduleService.getSingleScheduleFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Schedule retrieved successfully",
+    data: result,
+  });
+});
+
 export const scheduleController = {
   createSchedule,
   getAllSchedule,
+  getSingleSchedule,
 };
