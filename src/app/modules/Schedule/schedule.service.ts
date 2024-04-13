@@ -5,6 +5,8 @@ import { TSchedule, TScheduleFilterRequest } from "./schedule.interface";
 import { calculatePagination } from "../../helpers/paginationHelper";
 import { TPaginationOptions } from "../../interface/pagination";
 import { JwtPayload } from "jsonwebtoken";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 const createScheduleIntoDB = async (
   payload: TSchedule
 ): Promise<Schedule[]> => {
@@ -168,8 +170,28 @@ const getSingleScheduleFromDB = async (id: string) => {
   return result;
 };
 
+// delete single schedule
+const deleteSingleScheduleFromDB = async (id: string) => {
+  const schedule = await prisma.schedule.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!schedule) {
+    throw new AppError(httpStatus.NOT_FOUND, "Schedule not found");
+  }
+  const result = await prisma.schedule.delete({
+    where: {
+      id,
+    },
+  });
+
+  return result;
+};
+
 export const scheduleService = {
   createScheduleIntoDB,
   getAllScheduleFromDB,
   getSingleScheduleFromDB,
+  deleteSingleScheduleFromDB,
 };
