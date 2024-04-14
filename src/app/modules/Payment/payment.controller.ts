@@ -5,7 +5,8 @@ import { paymentService } from "./payment.service";
 
 const initPayment = catchAsync(async (req, res) => {
   const user = req.user;
-  const result = await paymentService.initPaymentIntoDB();
+  const { appointmentId } = req.params;
+  const result = await paymentService.initPaymentIntoDB(appointmentId);
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
