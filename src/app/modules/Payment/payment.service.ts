@@ -34,6 +34,20 @@ const initPaymentIntoDB = async (appointmentId: string) => {
   };
 };
 
+const validatePayment = async (query: any) => {
+  if (!query || query.status || !(query.status === "VALID")) {
+    return {
+      message: "Invalid payment",
+    };
+  }
+
+  const response = await axios({
+    method: "GET",
+    url: `${config.sslCommerz.ssl_validation_api_url}?val_id=${query.val_id}&store_id=${config.sslCommerz.store_id}&store_passwd=${config.sslCommerz.store_pass}&format=json`,
+  });
+};
+
 export const paymentService = {
   initPaymentIntoDB,
+  validatePayment,
 };
