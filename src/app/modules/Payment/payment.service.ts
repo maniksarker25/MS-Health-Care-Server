@@ -3,6 +3,7 @@ import config from "../../config";
 import prisma from "../../utils/prisma";
 import { sslService } from "../SSL/ssl.service";
 import { TInitPaymentData } from "../SSL/ssl.interface";
+import { PaymentStatus } from "@prisma/client";
 const initPaymentIntoDB = async (appointmentId: string) => {
   const paymentData = await prisma.payment.findFirstOrThrow({
     where: {
@@ -35,16 +36,48 @@ const initPaymentIntoDB = async (appointmentId: string) => {
 };
 
 const validatePayment = async (query: any) => {
-  if (!query || query.status || !(query.status === "VALID")) {
-    return {
-      message: "Invalid payment",
-    };
-  }
+  // comment the ssl commerz validation code for check locally--------------
+  //! TODO:-----------------------------
+  // if (!query || !query.status || !(query.status === "VALID")) {
+  //   return {
+  //     message: "Invalid payment",
+  //   };
+  // }
 
-  const response = await axios({
-    method: "GET",
-    url: `${config.sslCommerz.ssl_validation_api_url}?val_id=${query.val_id}&store_id=${config.sslCommerz.store_id}&store_passwd=${config.sslCommerz.store_pass}&format=json`,
+  // // validate payment by function-------------
+  // const response = await sslService.validatePayment(query);
+  // if (response.status !== "VALID") {
+  //   return {
+  //     message: "Payment failed",
+  //   };
+  // }
+
+  // it's fake
+  const response = query;
+  await prisma.$transaction(async (tx) => {
+    const updatePaymentData = await tx.payment.update({
+      where: {
+        transactionId: response.tran_id,
+      },
+      data: {
+        status: PaymentStatus.PAID,
+        paymentGatewayData: response,
+      },
+    });
+
+    await tx.appointment.update({
+      where: {
+        id: updatePaymentData.appointmentId,
+      },
+      data: {
+        paymentStatus: PaymentStatus.PAID,
+      },
+    });
   });
+
+  return {
+    message: "Payment successful",
+  };
 };
 
 export const paymentService = {

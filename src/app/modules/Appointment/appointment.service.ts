@@ -60,20 +60,21 @@ const createAppointmentIntoDB = async (user: JwtPayload, payload: any) => {
 
     // make transaction id for payment
     const today = new Date();
-    const transactionId =
-      "ms-healthcare" +
-      "-" +
-      today.getFullYear() +
-      "-" +
-      today.getMonth() +
-      "-" +
-      today.getDay() +
-      "-" +
-      today.getHours() +
-      "-" +
-      today.getMinutes() +
-      "-" +
-      today.getMilliseconds();
+    // const transactionId =
+    //   "ms-healthcare" +
+    //   "-" +
+    //   today.getFullYear() +
+    //   "-" +
+    //   today.getMonth() +
+    //   "-" +
+    //   today.getDay() +
+    //   "-" +
+    //   today.getHours() +
+    //   "-" +
+    //   today.getMinutes() +
+    //   "-" +
+    //   today.getMilliseconds();
+    const transactionId = `mshcare-${uuidv4()}`;
 
     await tx.payment.create({
       data: {
