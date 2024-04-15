@@ -4,7 +4,11 @@ import sendResponse from "../../utils/sendResponse";
 import { prescriptionService } from "./priscription.service";
 
 const createPrescription = catchAsync(async (req, res) => {
-  const result = await prescriptionService.createPrescriptionIntoDB(req.body);
+  const user = req.user;
+  const result = await prescriptionService.createPrescriptionIntoDB(
+    user,
+    req.body
+  );
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
