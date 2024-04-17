@@ -7,9 +7,17 @@ import { TPaginationOptions } from "../../interface/pagination";
 import { JwtPayload } from "jsonwebtoken";
 import AppError from "../../errors/appError";
 import httpStatus from "http-status";
+
+const convertDateTimeToUTC = async (date: Date) => {
+  const offset = date.getTimezoneOffset() * 60000;
+  // console.log(offset);
+  // console.log("converted date", new Date(date.getTime() + offset));
+  return new Date(date.getTime() + offset);
+};
 const createScheduleIntoDB = async (
   payload: TSchedule
 ): Promise<Schedule[]> => {
+  console.log("nice schedule");
   const { startDate, endDate, startTime, endTime } = payload;
 
   const currentDate = new Date(startDate);
@@ -41,9 +49,18 @@ const createScheduleIntoDB = async (
     // console.log("endtime", endDateTime);
 
     while (startDateTime < endDateTime) {
+      // const scheduleData = {
+      //   startDateTime: startDateTime,
+      //   endDateTime: addMinutes(startDateTime, intervalTime),
+      // };
+      // for utc time zone
+      const s = await convertDateTimeToUTC(startDateTime);
+      const e = await convertDateTimeToUTC(
+        addMinutes(startDateTime, intervalTime)
+      );
       const scheduleData = {
-        startDateTime: startDateTime,
-        endDateTime: addMinutes(startDateTime, intervalTime),
+        startDateTime: s,
+        endDateTime: e,
       };
       // console.log(scheduleData);
 
