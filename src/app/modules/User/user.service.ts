@@ -3,7 +3,6 @@ import {
   Doctor,
   Patient,
   Prisma,
-  PrismaClient,
   UserRole,
   UserStatus,
 } from "@prisma/client";
@@ -16,7 +15,7 @@ import { JwtPayload } from "jsonwebtoken";
 import { symbol } from "zod";
 import { Request } from "express";
 import { IFile } from "../../interface/file";
-const prisma = new PrismaClient();
+import prisma from "../../utils/prisma";
 const createAdminIntoDB = async (
   file: any,
   password: string,

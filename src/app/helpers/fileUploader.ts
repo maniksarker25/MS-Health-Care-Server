@@ -1,10 +1,11 @@
 import multer from "multer";
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 import fs from "fs";
+import config from "../config";
 cloudinary.config({
-  cloud_name: "dp6nuvot3",
-  api_key: "578152791375281",
-  api_secret: "N8x2HVDeXXZvOUJkAV40S-nWx-g",
+  cloud_name: config.cloudinary_cloud_name,
+  api_key: config.cloudinary_api_key,
+  api_secret: config.cloudinary_api_key,
 });
 
 const uploadImageToCloudinary = async (

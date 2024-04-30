@@ -13,6 +13,9 @@ export default {
   jwt_reset_pass_secret: process.env.JWT_RESET_PASS_SECRET,
   jwt_reset_pass_token_expires_in: process.env.JWT_RESET_PASS_TOKEN_EXPIRES_IN,
   reset_password_ui_link: process.env.RESET_PASSWORD_UI_LINK,
+  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
+  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
   emailSender: {
     email: process.env.EMAIL,
     app_password: process.env.APP_PASSWORD,
