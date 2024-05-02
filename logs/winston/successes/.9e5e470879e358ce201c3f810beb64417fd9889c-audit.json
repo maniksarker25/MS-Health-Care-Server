@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\successes\\.9e5e470879e358ce201c3f810beb64417fd9889c-audit.json",
+    "files": [
+        {
+            "date": 1714645107210,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\successes\\phu-2024-02-05-16-success.log",
+            "hash": "83bf94985f3e69270cb185110364edf3026c56ca78f0cbe1c8abc51c7d245d17"
+        }
+    ],
+    "hashType": "sha256"
+}

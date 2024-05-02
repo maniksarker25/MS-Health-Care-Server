@@ -6,7 +6,8 @@ import { doctorController } from "./doctor.controller";
 const router = express.Router();
 router.get(
   "/",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  //! TODO
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
   doctorController.getAllDoctor
 );
 

@@ -22,7 +22,7 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
   );
 
   if (!isPasswordMatched) {
-    throw new Error("Password does not matched");
+    throw new AppError(httpStatus.BAD_REQUEST, "Password does not matched");
   }
 
   const jwtPayload = {
