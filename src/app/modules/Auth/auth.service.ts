@@ -8,6 +8,7 @@ import config from "../../config";
 import AppError from "../../errors/appError";
 import httpStatus from "http-status";
 import { sendEmail } from "../../utils/sendEmail";
+import verifyToken from "../../helpers/verifyToken";
 const loginUserIntoDB = async (payload: TLoginUser) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -54,11 +55,12 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
 
 // refresh token
 const refreshToken = async (token: string) => {
+  console.log("refresh token =>", token);
   let decodedData;
   try {
-    decodedData = (await jwt.verify(token, "efghij")) as JwtPayload;
+    decodedData = verifyToken(token, config.jwt_refresh_secret as string);
   } catch (error) {
-    throw new Error("You are not authenticated");
+    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized ");
   }
   const user = await prisma.user.findUnique({
     where: {
@@ -70,7 +72,11 @@ const refreshToken = async (token: string) => {
     email: user?.email,
     role: user?.role,
   };
-  const accessToken = generateToken(jwtPayload, "abcdefg", "15m");
+  const accessToken = generateToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expires_in as string
+  );
   return { accessToken };
 };
 

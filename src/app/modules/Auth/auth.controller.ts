@@ -3,16 +3,25 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { authService } from "./auth.service";
 import AppError from "../../errors/appError";
+import config from "../../config";
 
 const loginUser = catchAsync(async (req, res) => {
   const result = await authService.loginUserIntoDB(req.body);
   const { refreshToken, accessToken, needPasswordChange } = result;
-  res.cookie("refreshToken", refreshToken, {
-    secure: false,
+
+  // res.cookie("refreshToken", refreshToken, {
+  //   secure: false,
+  //   httpOnly: true,
+  //   sameSite: "none",
+  //   maxAge: 1000 * 60 * 60 * 24 * 265,
+  // });
+  // set refresh token into cookie
+  const cookieOptions = {
+    secure: config.env === "production",
     httpOnly: true,
-    sameSite: "none",
-    maxAge: 1000 * 60 * 60 * 24 * 265,
-  });
+  };
+
+  res.cookie("refreshToken", refreshToken, cookieOptions);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -28,6 +37,14 @@ const loginUser = catchAsync(async (req, res) => {
 const refreshToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies;
   const result = await authService.refreshToken(refreshToken);
+  // set refresh token into cookie
+  // const cookieOptions = {
+  //   secure: config.env === "production",
+  //   httpOnly: true,
+  // };
+
+  // res.cookie("refreshToken", refreshToken, cookieOptions);
+
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
