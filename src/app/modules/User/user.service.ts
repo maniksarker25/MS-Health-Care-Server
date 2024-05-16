@@ -16,6 +16,8 @@ import { symbol } from "zod";
 import { Request } from "express";
 import { IFile } from "../../interface/file";
 import prisma from "../../utils/prisma";
+import AppError from "../../errors/appError";
+import httpStatus from "http-status";
 const createAdminIntoDB = async (
   file: any,
   password: string,
@@ -93,6 +95,15 @@ const createPatientIntoDB = async (
   patientData: Patient
 ) => {
   // console.log("Patient", password, patientData);
+
+  const patient = await prisma.patient.findUnique({
+    where: {
+      email: patientData.email,
+    },
+  });
+  if (patient) {
+    throw new AppError(httpStatus.BAD_REQUEST, "User already exists");
+  }
   if (file) {
     const imageName = file.originalname;
     const uploadImage = await fileUploader.uploadImageToCloudinary(

@@ -9,12 +9,16 @@ import AppError from "../../errors/appError";
 import httpStatus from "http-status";
 import { sendEmail } from "../../utils/sendEmail";
 const loginUserIntoDB = async (payload: TLoginUser) => {
-  const user = await prisma.user.findUniqueOrThrow({
+  const user = await prisma.user.findUnique({
     where: {
       email: payload.email,
       status: UserStatus.ACTIVE,
     },
   });
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "This user does not exist");
+  }
 
   const isPasswordMatched = await bcrypt.compare(
     payload?.password,
@@ -26,6 +30,7 @@ const loginUserIntoDB = async (payload: TLoginUser) => {
   }
 
   const jwtPayload = {
+    id: user?.id,
     email: user?.email,
     role: user?.role,
   };

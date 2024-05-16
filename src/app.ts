@@ -11,7 +11,7 @@ import cookieParser from "cookie-parser";
 import { appointmentService } from "./app/modules/Appointment/appointment.service";
 import cron from "node-cron";
 const app: Application = express();
-app.use(cors());
+app.use(cors({ origin: "http://localhost:5000", credentials: true }));
 app.use(cookieParser());
 // parser ----------------------------------------------------------------
 app.use(express.json());
