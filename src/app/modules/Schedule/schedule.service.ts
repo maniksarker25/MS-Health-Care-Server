@@ -94,8 +94,6 @@ const getAllScheduleFromDB = async (
   user: JwtPayload
 ) => {
   const { startDate, endDate, ...filterData } = query;
-  const startDateTime = new Date(`${startDate}T00:00:00.000Z`).toISOString();
-  const endDateTime = new Date(`${endDate}T23:59:59.999Z`).toISOString();
 
   const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
   // console.log(filterData);
@@ -107,12 +105,12 @@ const getAllScheduleFromDB = async (
       AND: [
         {
           startDateTime: {
-            gte: startDateTime,
+            gte: startDate,
           },
         },
         {
           endDateTime: {
-            lte: endDateTime,
+            lte: endDate,
           },
         },
       ],
