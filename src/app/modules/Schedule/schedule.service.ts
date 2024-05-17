@@ -94,6 +94,8 @@ const getAllScheduleFromDB = async (
   user: JwtPayload
 ) => {
   const { startDate, endDate, ...filterData } = query;
+  const startDateTime = new Date(`${startDate}T00:00:00.000Z`).toISOString();
+  const endDateTime = new Date(`${endDate}T23:59:59.999Z`).toISOString();
 
   const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
   // console.log(filterData);
@@ -105,12 +107,12 @@ const getAllScheduleFromDB = async (
       AND: [
         {
           startDateTime: {
-            gte: startDate,
+            gte: startDateTime,
           },
         },
         {
           endDateTime: {
-            lte: endDate,
+            lte: endDateTime,
           },
         },
       ],
@@ -127,7 +129,9 @@ const getAllScheduleFromDB = async (
       })),
     });
   }
-  const whereConditions: Prisma.ScheduleWhereInput = { AND: andConditions };
+  // const whereConditions: Prisma.ScheduleWhereInput = { AND: andConditions };
+  const whereConditions: Prisma.ScheduleWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
   // console.dir(whereConditions, { depth: "infinity" });
 
   // find all schedules for this doctor for not show duplicate schedules
