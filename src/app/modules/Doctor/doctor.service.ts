@@ -169,8 +169,10 @@ const updateDoctorIntoDB = async (id: string, payload: any) => {
         const existingSpecialty = await prisma.doctorSpecialties.findFirst({
           where: {
             specialtiesId: specialty.specialtiesId,
+            doctorId: doctorInfo?.id,
           },
         });
+        console.log(existingSpecialty);
         if (!existingSpecialty) {
           await transactionClient.doctorSpecialties.create({
             data: {
