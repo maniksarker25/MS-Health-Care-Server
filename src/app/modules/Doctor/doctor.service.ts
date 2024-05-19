@@ -113,6 +113,13 @@ const getSingleDoctorFromDB = async (id: string): Promise<Doctor | null> => {
       id,
       isDeleted: false,
     },
+    include: {
+      doctorSpecialties: {
+        include: {
+          specialties: true,
+        },
+      },
+    },
   });
   return result;
 };
@@ -159,12 +166,19 @@ const updateDoctorIntoDB = async (id: string, payload: any) => {
       );
       console.log("create", createSpecialties);
       for (const specialty of createSpecialties) {
-        await transactionClient.doctorSpecialties.create({
-          data: {
-            doctorId: doctorInfo?.id,
+        const existingSpecialty = await prisma.doctorSpecialties.findFirst({
+          where: {
             specialtiesId: specialty.specialtiesId,
           },
         });
+        if (!existingSpecialty) {
+          await transactionClient.doctorSpecialties.create({
+            data: {
+              doctorId: doctorInfo?.id,
+              specialtiesId: specialty.specialtiesId,
+            },
+          });
+        }
       }
     }
   });

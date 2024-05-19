@@ -96,6 +96,11 @@ const getMyScheduleFromDB = async (
         email: user?.email,
       },
     },
+    include: {
+      doctor: true,
+      schedule: true,
+      appointment: true,
+    },
     skip,
     take: limit,
     orderBy:
@@ -187,6 +192,11 @@ const getAllDoctorScheduleFromDB = async (
 
   const result = await prisma.doctorSchedules.findMany({
     where: whereConditions,
+    include: {
+      doctor: true,
+      schedule: true,
+      appointment: true,
+    },
     skip,
     take: limit,
     orderBy:

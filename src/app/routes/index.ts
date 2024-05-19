@@ -45,7 +45,7 @@ const moduleRoutes = [
     route: scheduleRoutes,
   },
   {
-    path: "/doctorSchedule",
+    path: "/doctor-schedule",
     route: doctorScheduleRoutes,
   },
   {

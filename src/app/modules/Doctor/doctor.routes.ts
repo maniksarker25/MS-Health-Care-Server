@@ -12,7 +12,7 @@ router.get(
 
 router.get(
   "/:id",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN),
+  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR),
   doctorController.getSingleDoctor
 );
 
