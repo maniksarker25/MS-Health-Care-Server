@@ -92,6 +92,11 @@ const getAllDoctorFromDB = async (
           specialties: true,
         },
       },
+      doctorSchedules: {
+        include: {
+          schedule: true,
+        },
+      },
     },
   });
   const total = await prisma.doctor.count({

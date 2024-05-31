@@ -78,17 +78,17 @@ const forgetPassword = catchAsync(async (req, res) => {
 
 // reset password
 const resetPassword = catchAsync(async (req, res) => {
-  const token = req?.headers?.authorization;
+  const token = req.headers.authorization || "";
+  await authService.resetPasswordIntoDB(req.body, token);
 
-  if (!token) {
-    throw new AppError(httpStatus.BAD_REQUEST, "Something went wrong !");
-  }
-  const result = authService.resetPasswordIntoDB(token, req.body);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 200,
     success: true,
-    message: "Password reset successfully",
-    data: result,
+    message: "Account recovered!",
+    data: {
+      status: 200,
+      message: "Password Reset Successfully",
+    },
   });
 });
 

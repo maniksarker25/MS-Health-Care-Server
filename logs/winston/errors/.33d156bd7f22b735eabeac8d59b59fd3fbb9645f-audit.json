@@ -6,116 +6,6 @@
     "auditLog": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\.33d156bd7f22b735eabeac8d59b59fd3fbb9645f-audit.json",
     "files": [
         {
-            "date": 1714915663541,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-05-05-19-error.log",
-            "hash": "7788ad9369f0e4197a3f386f5d94580a1b0a9e5e50860123cc8ad111abe4ef15"
-        },
-        {
-            "date": 1714918421965,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-05-05-20-error.log",
-            "hash": "f45eef38ffd3b46dc360268a08b9e05e94113f90418addbd5a86c901ab1844c0"
-        },
-        {
-            "date": 1715003807517,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-06-05-19-error.log",
-            "hash": "f8356267488682ee6465afc647d34adf95d7c28fb14c36fe00cc2a41763faf8d"
-        },
-        {
-            "date": 1715061106517,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-07-05-11-error.log",
-            "hash": "f24409972e0e44d9e370f5798d054d0ec7f5406fc158a80f7f398377d8eb43f0"
-        },
-        {
-            "date": 1715143732968,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-08-05-10-error.log",
-            "hash": "c3d79560e1fd385440f50650a31ae655aafe518bb05089e91a7c66ec37c3068c"
-        },
-        {
-            "date": 1715181702056,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-08-05-21-error.log",
-            "hash": "266d62895a42b6b53d51da0f5c6051ac21320b5c301405ce53c565a33210dc0c"
-        },
-        {
-            "date": 1715256415468,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-09-05-18-error.log",
-            "hash": "6692df94d8e3aa3308ef965d29074763dca0879d97ec015e50d382c6bf54fd31"
-        },
-        {
-            "date": 1715514982386,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-12-05-17-error.log",
-            "hash": "d083477cf52495064c2f71682f93ec3b19a242852e0f70b3f239730a63aab916"
-        },
-        {
-            "date": 1715517105410,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-12-05-18-error.log",
-            "hash": "ac994021595d22467d9ebda747db2f99a1ca4341f82aa9d7299739b8a2fa9a96"
-        },
-        {
-            "date": 1715834561700,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-10-error.log",
-            "hash": "0215f8897a8a73902af2e1ab58e590d8d11d9c31c7182237db99c212b59301f2"
-        },
-        {
-            "date": 1715841394670,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-12-error.log",
-            "hash": "b2584ba9fe3f2a1e76528939de92d498c6f72be9b20ea871d8a9daee97d6226a"
-        },
-        {
-            "date": 1715845310114,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-13-error.log",
-            "hash": "24cfb3b2900a795942ae9b148af55456eeaa7e3b58d15eae5d2211f39595238f"
-        },
-        {
-            "date": 1715847638981,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-14-error.log",
-            "hash": "d5c5a4c9dcf0a08b5650b379f18338076b19ae020dc372f9eab79336457f12f7"
-        },
-        {
-            "date": 1715850303072,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-15-error.log",
-            "hash": "b7f312978628728a02180887370e5e830ab8d1d860dc33a80e6eb56645be6c38"
-        },
-        {
-            "date": 1715854065357,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-16-error.log",
-            "hash": "b3207f6c469837705f5f6bd35e99bf784b36eabd6b31d15f8868e7e61280a445"
-        },
-        {
-            "date": 1715866135865,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-16-05-19-error.log",
-            "hash": "4ca2156733b852c1c553952e4673bf3d248e2ff4e94d9e056a6d394ef5ac26d4"
-        },
-        {
-            "date": 1715921244386,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-10-error.log",
-            "hash": "072a3f1de350cb19921fbe79f980dfa5ee1888e621e5591ff66cabd69fc0c271"
-        },
-        {
-            "date": 1715925830865,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-12-error.log",
-            "hash": "9f7a56746252cb3feafd7e005dff246b0d838d37c78db85593c5020abf4576ce"
-        },
-        {
-            "date": 1715932297086,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-13-error.log",
-            "hash": "8b6f36ae2fd4fab7a70d3c1db8a5c887a1b82ed26ec5709fd6c81af1575edae6"
-        },
-        {
-            "date": 1715933882624,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-14-error.log",
-            "hash": "d1a7ad57845f79ca2a796aee307ded21150cc816b77f0f654ff495c49bf7a094"
-        },
-        {
-            "date": 1715936428530,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-15-error.log",
-            "hash": "bc69f61e112de11287fc7760df8312c8770830c1c385bf39a9fec88c8d79de23"
-        },
-        {
-            "date": 1715960139874,
-            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-17-05-21-error.log",
-            "hash": "706c40fc0b87111e447d89a9be03c6724b161a68fbb44e64ada361d0128e05de"
-        },
-        {
             "date": 1716013676063,
             "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-18-05-12-error.log",
             "hash": "cbbdee783ae895c543c46568afddb5aee02d1a734a216f357eb36c6009ef8781"
@@ -139,6 +29,36 @@
             "date": 1716098432500,
             "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-19-05-12-error.log",
             "hash": "eaea93105f07a1b2fcba8ecd5d19731fd1abd093152d289b69c151ba527a099d"
+        },
+        {
+            "date": 1716132831198,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-19-05-21-error.log",
+            "hash": "699eac681cffcb7140bc08c20d93bf1f78e390f0c337378fe829862779f96cc1"
+        },
+        {
+            "date": 1716134834972,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-19-05-22-error.log",
+            "hash": "067fd40c3a1ba73492069eb90123c14b0127601e0af56e656385647cd070d545"
+        },
+        {
+            "date": 1716702342533,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-26-05-11-error.log",
+            "hash": "a31f600c447ea85b4549f55da65833c5f241f43965e4b828fa10cc35250500d4"
+        },
+        {
+            "date": 1717173022785,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-31-05-22-error.log",
+            "hash": "47c9ea22f840a6f8c2b28f68c002459db4e52ffa87a850e3da96c7db9585cdb3"
+        },
+        {
+            "date": 1717181647431,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-01-06-00-error.log",
+            "hash": "b0c62ba5183c24e95dd99eae14b903fe93c9d974ae786b20470e38cc137e4a36"
+        },
+        {
+            "date": 1717182322998,
+            "name": "D:\\PROGRAMMING HERO NEXT LEVEL\\PROJECTS\\MS-Health-Care\\ms-health-care-server\\logs\\winston\\errors\\phu-2024-01-06-01-error.log",
+            "hash": "fddc132ab53fda292d008cddac260d5076fad0b177a143e4037f13a81f4b7514"
         }
     ],
     "hashType": "sha256"

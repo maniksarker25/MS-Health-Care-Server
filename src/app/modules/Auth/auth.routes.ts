@@ -13,13 +13,13 @@ router.post(
   authController.changePassword
 );
 router.post(
-  "/forget-password",
-  auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  "/forgot-password",
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   authController.forgetPassword
 );
 router.post(
   "/reset-password",
-  //   auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
+  // auth(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.DOCTOR, UserRole.PATIENT),
   authController.resetPassword
 );
 
