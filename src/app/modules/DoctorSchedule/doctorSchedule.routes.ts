@@ -12,7 +12,7 @@ router.get(
 );
 router.get(
   "/",
-  auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
+  // auth(UserRole.ADMIN, UserRole.SUPER_ADMIN),
   doctorScheduleController.getAllDoctorSchedule
 );
 router.post(
