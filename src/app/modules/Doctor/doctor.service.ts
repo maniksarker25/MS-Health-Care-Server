@@ -124,6 +124,11 @@ const getSingleDoctorFromDB = async (id: string): Promise<Doctor | null> => {
           specialties: true,
         },
       },
+      doctorSchedules: {
+        include: {
+          schedule: true,
+        },
+      },
     },
   });
   return result;
